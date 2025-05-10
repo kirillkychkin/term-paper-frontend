@@ -6,18 +6,15 @@ const searchStore = useSearchStore()
 </script>
 
 <template>
-  <div class="items-top flex gap-x-2">
-    <Checkbox id="terms1" />
-    <div class="grid gap-1.5 leading-none">
-      <label
-        for="terms1"
-        class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-      >
-        Accept terms and conditions
-      </label>
-      <p class="text-sm text-muted-foreground">
-        You agree to our Terms of Service and Privacy Policy.
-      </p>
+  <h2 class="font-semibold mb-4">Выберите языки программирования</h2>
+  <div class="flex gap-x-4 gap-y-4 flex-wrap">
+    <div
+      v-for="language in searchStore.languages"
+      :key="language.id"
+      class="items-top flex gap-x-2"
+    >
+      <Checkbox :id="language.id.toString()" v-model:model-value="language.checked" />
+      <label :for="language.id.toString()" class="text-sm"> {{ language.name }} </label>
     </div>
   </div>
 </template>

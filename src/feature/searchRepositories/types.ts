@@ -11,11 +11,3 @@ export interface ITagCategory {
   updated_at: string | null
   name: string
 }
-
-export interface ITag {
-  id: number
-  created_at: string | null
-  updated_at: string | null
-  name: string
-  tag_category_id: number
-}

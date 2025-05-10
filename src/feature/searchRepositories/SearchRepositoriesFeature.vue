@@ -29,4 +29,7 @@ function loadFilters() {
 loadFilters()
 </script>
 
-<template>search repositories <LanguagesFilter /></template>
+<template>
+  <h1 class="font-bold text-xl">Фильтры</h1>
+  <LanguagesFilter />
+</template>
