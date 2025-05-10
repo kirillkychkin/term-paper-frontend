@@ -1,8 +1,7 @@
 <script setup lang="ts">
-function addEvent() {}
+import SearchRepositoriesFeature from '@/feature/searchRepositories/SearchRepositoriesFeature.vue'
 </script>
 
 <template>
-  Home
-  <button type="submit" @click="addEvent">создать сореву</button>
+  <SearchRepositoriesFeature />
 </template>

@@ -15,7 +15,6 @@ class ApiInstance {
         'Content-Type': 'application/json',
         Accept: '*/*',
       },
-      withCredentials: true,
     })
 
     this.axios.interceptors.request.use(
