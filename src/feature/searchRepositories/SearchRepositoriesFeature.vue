@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { getLanguages, getTagCategories, getTagCategoryChildren } from './api'
-import { useSearchStore } from './store'
+import { useSearchStore } from '@/entities/search/store.ts'
+
+import LanguagesFilter from '@/widgets/languagesFilter/LanguagesFilter.vue'
 
 const searchStore = useSearchStore()
 
@@ -27,4 +29,4 @@ function loadFilters() {
 loadFilters()
 </script>
 
-<template>search repos</template>
+<template>search repositories <LanguagesFilter /></template>
