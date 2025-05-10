@@ -20,3 +20,8 @@ export interface ITag {
   name: string
   tag_category_id: number
 }
+
+export interface State {
+  tagCategories: ILanguageMapped[]
+  languages: ILanguageMapped[]
+}
