@@ -56,11 +56,13 @@ function search() {
   }
   searchRepositories(searchReq).then((response) => {
     searchStore.setResults(response.data)
+    alert('Репозитории найдены')
   })
 }
 
 function reset() {
   searchStore.reset()
+  alert('Тэги сброшены')
 }
 
 loadFilters()

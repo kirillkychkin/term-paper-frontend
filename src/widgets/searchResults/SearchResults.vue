@@ -15,12 +15,34 @@ const searchStore = useSearchStore()
 function openRepo(repoId: number) {
   console.log('open repo ' + repoId.toString())
 }
+function getRepositoryWord(count: number): string {
+  const lastTwo = count % 100
+  const lastOne = count % 10
+
+  // Исключения для чисел 11-14
+  if (lastTwo >= 11 && lastTwo <= 14) {
+    return 'репозиториев'
+  }
+
+  switch (lastOne) {
+    case 1:
+      return 'репозиторий'
+    case 2:
+    case 3:
+    case 4:
+      return 'репозитория'
+    default:
+      return 'репозиториев'
+  }
+}
 </script>
 
 <template>
   <div class="mb-8">
     <h2 class="font-semibold mb-4">Результаты</h2>
-    <p>Найдено {{ searchStore.results.length }} подходящих репозиториев</p>
+    <p>
+      Найдено {{ searchStore.results.length }} {{ getRepositoryWord(searchStore.results.length) }}
+    </p>
     <p class="text-muted-foreground">
       Обрати внимание, что описание и текст были переведены машинным переводом. Могут быть ошибки
     </p>
