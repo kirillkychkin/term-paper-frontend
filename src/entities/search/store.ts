@@ -1,8 +1,8 @@
 import { defineStore } from 'pinia'
-import type { ITagCategoryMapped, ILanguageMapped, State } from './types'
+import type { ITagCategoryMapped, ILanguageMapped, State, IRepository } from './types'
 
 export const useSearchStore = defineStore('store', {
-  state: (): State => ({ tagCategories: [], languages: [] }),
+  state: (): State => ({ tagCategories: [], languages: [], results: [] }),
   actions: {
     setLanguages(languages: ILanguageMapped[]) {
       this.languages = languages
@@ -23,6 +23,19 @@ export const useSearchStore = defineStore('store', {
       const newValue = !allChecked
       category.tags.forEach((tag) => {
         tag.checked = newValue
+      })
+    },
+    setResults(repositories: IRepository[]) {
+      this.results = repositories
+    },
+    reset() {
+      this.tagCategories.forEach((tagCat) => {
+        tagCat.tags.forEach((tag) => {
+          tag.checked = false
+        })
+      })
+      this.languages.forEach((language) => {
+        language.checked = false
       })
     },
   },

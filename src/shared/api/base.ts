@@ -40,19 +40,19 @@ class ApiInstance {
     return await this.axios.get(endpoint, options)
   }
 
-  async post<T>(endpoint: string, data: object): Promise<T> {
+  async post<T>(endpoint: string, data: object): AxiosPromise<T> {
     const response: AxiosResponse<T> = await this.axios.post(endpoint, data)
-    return response.data
+    return response
   }
 
-  async patch<T>(endpoint: string, data: object): Promise<T> {
+  async patch<T>(endpoint: string, data: object): AxiosPromise<T> {
     const response: AxiosResponse<T> = await this.axios.patch(endpoint, data)
-    return response.data
+    return response
   }
 
-  async delete<T>(endpoint: string, options: AxiosRequestConfig = {}): Promise<T> {
+  async delete<T>(endpoint: string, options: AxiosRequestConfig = {}): AxiosPromise<T> {
     const response: AxiosResponse<T> = await this.axios.delete(endpoint, options)
-    return response.data
+    return response
   }
 }
 

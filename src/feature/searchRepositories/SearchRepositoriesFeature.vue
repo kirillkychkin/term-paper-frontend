@@ -5,6 +5,7 @@ import type { ITagCategoryMapped, ITagMapped } from '@/entities/search/types'
 
 import LanguagesFilter from '@/widgets/languagesFilter/LanguagesFilter.vue'
 import TagsFilter from '@/widgets/tagsFilter/TagsFilter.vue'
+import SearchResults from '@/widgets/searchResults/SearchResults.vue'
 
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/shared/ui/accordion'
 import { Button } from '@/shared/ui/button'
@@ -54,8 +55,12 @@ function search() {
     tags: tagIds,
   }
   searchRepositories(searchReq).then((response) => {
-    console.log(response)
+    searchStore.setResults(response.data)
   })
+}
+
+function reset() {
+  searchStore.reset()
 }
 
 loadFilters()
@@ -78,6 +83,8 @@ loadFilters()
         </AccordionContent>
       </AccordionItem>
     </Accordion>
-    <Button @click="search" class="cursor-pointer">Найти</Button>
+    <Button @click="search" class="cursor-pointer mr-8">Найти</Button>
+    <Button @click="reset" class="cursor-pointer mb-8" variant="outline">Сбросить фильтры</Button>
+    <SearchResults />
   </div>
 </template>
