@@ -7,18 +7,14 @@ const searchStore = useSearchStore()
 
 <template>
   <h2 class="font-semibold mb-4">Выберите языки программирования</h2>
-  <div class="flex gap-x-4 gap-y-4 flex-wrap">
+  <div class="flex gap-x-4 gap-y-4 flex-wrap mb-8">
     <div
       v-for="language in searchStore.languages"
       :key="language.id"
       class="items-top flex gap-x-2"
     >
-      <Checkbox
-        :id="language.id.toString()"
-        v-model:model-value="language.checked"
-        class="cursor-pointer"
-      />
-      <label :for="language.id.toString()" class="text-sm"> {{ language.name }} </label>
+      <Checkbox v-model:model-value="language.checked" class="cursor-pointer" />
+      <label class="text-sm"> {{ language.name }} </label>
     </div>
   </div>
 </template>

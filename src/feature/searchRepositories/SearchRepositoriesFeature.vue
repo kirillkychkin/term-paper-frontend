@@ -1,12 +1,13 @@
 <script setup lang="ts">
 import { getLanguages, getTagCategories, getTagCategoryChildren, searchRepositories } from './api'
 import { useSearchStore } from '@/entities/search/store.ts'
-import type { ITagCategoryMapped } from '@/entities/search/types'
+import type { ITagCategoryMapped, ITagMapped } from '@/entities/search/types'
 
 import LanguagesFilter from '@/widgets/languagesFilter/LanguagesFilter.vue'
+import TagsFilter from '@/widgets/tagsFilter/TagsFilter.vue'
 import { Button } from '@/shared/ui/button'
 
-import { getLanguagesIds } from './formatFilters'
+import { getLanguagesIds, getTagsIds } from './formatFilters'
 
 const searchStore = useSearchStore()
 
@@ -25,10 +26,10 @@ function loadFilters() {
       const tagsResponse = await getTagCategoryChildren(tagCategory.id)
 
       // Create a new object that matches ITagCategoryMapped
+      const mappedTags: ITagMapped[] = tagsResponse.data.map((obj) => ({ ...obj, checked: false }))
       const mappedCategory: ITagCategoryMapped = {
         ...tagCategory,
-        checked: false,
-        tags: tagsResponse.data,
+        tags: mappedTags,
       }
 
       return mappedCategory
@@ -43,9 +44,12 @@ function loadFilters() {
 function search() {
   const selectedLanguages = searchStore.getSelectedLanguages()
   const languageIds = getLanguagesIds(selectedLanguages)
+
+  const selectedTags = searchStore.getSelectedTags()
+  const tagIds = getTagsIds(selectedTags)
   const searchReq = {
     languages: languageIds,
-    tags: [],
+    tags: tagIds,
   }
   searchRepositories(searchReq).then((response) => {
     console.log(response)
@@ -59,6 +63,7 @@ loadFilters()
   <div>
     <h1 class="font-bold text-xl">Фильтры</h1>
     <LanguagesFilter />
-    <Button @click="search" class="mt-4 cursor-pointer">Найти</Button>
+    <TagsFilter />
+    <Button @click="search" class="cursor-pointer">Найти</Button>
   </div>
 </template>

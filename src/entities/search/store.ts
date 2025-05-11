@@ -13,5 +13,17 @@ export const useSearchStore = defineStore('store', {
     getSelectedLanguages() {
       return this.languages.filter((language) => language.checked === true)
     },
+    getSelectedTags() {
+      return this.tagCategories.flatMap((category) => category.tags.filter((tag) => tag.checked))
+    },
+    selectAllCaterogyTags(index: number) {
+      const category = this.tagCategories[index]
+      const allChecked = category.tags.every((tag) => tag.checked)
+
+      const newValue = !allChecked
+      category.tags.forEach((tag) => {
+        tag.checked = newValue
+      })
+    },
   },
 })
