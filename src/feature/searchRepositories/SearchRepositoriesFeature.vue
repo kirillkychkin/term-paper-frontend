@@ -5,6 +5,8 @@ import type { ITagCategoryMapped, ITagMapped } from '@/entities/search/types'
 
 import LanguagesFilter from '@/widgets/languagesFilter/LanguagesFilter.vue'
 import TagsFilter from '@/widgets/tagsFilter/TagsFilter.vue'
+
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/shared/ui/accordion'
 import { Button } from '@/shared/ui/button'
 
 import { getLanguagesIds, getTagsIds } from './formatFilters'
@@ -62,8 +64,20 @@ loadFilters()
 <template>
   <div>
     <h1 class="font-bold text-xl">Фильтры</h1>
-    <LanguagesFilter />
-    <TagsFilter />
+    <Accordion type="single" class="w-full" collapsible>
+      <AccordionItem value="item-1">
+        <AccordionTrigger class="cursor-pointer"> Фильтр языков программирования</AccordionTrigger>
+        <AccordionContent>
+          <LanguagesFilter />
+        </AccordionContent>
+      </AccordionItem>
+      <AccordionItem value="item-2">
+        <AccordionTrigger class="cursor-pointer"> Фильтр тэгов</AccordionTrigger>
+        <AccordionContent>
+          <TagsFilter />
+        </AccordionContent>
+      </AccordionItem>
+    </Accordion>
     <Button @click="search" class="cursor-pointer">Найти</Button>
   </div>
 </template>
