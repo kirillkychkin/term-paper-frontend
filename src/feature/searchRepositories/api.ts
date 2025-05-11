@@ -1,6 +1,6 @@
 import { API_URL, apiInstance } from '@/shared/api/base'
 import type { AxiosPromise } from 'axios'
-import type { ILanguage, ITagCategory } from './types'
+import type { ILanguage, ITagCategory, ISearchRequest } from './types'
 import type { ITag } from '@/entities/search/types'
 
 export const getLanguages = (): AxiosPromise<ILanguage[]> => {
@@ -13,4 +13,8 @@ export const getTagCategories = (): AxiosPromise<ITagCategory[]> => {
 
 export const getTagCategoryChildren = (tag_category_id: number): AxiosPromise<ITag[]> => {
   return apiInstance.get(`${API_URL}/tag-categories/${tag_category_id}/tags`)
+}
+
+export const searchRepositories = (data: ISearchRequest) => {
+  return apiInstance.post(`${API_URL}/repositories/search`, data)
 }

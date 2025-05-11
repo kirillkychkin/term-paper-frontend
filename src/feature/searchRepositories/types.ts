@@ -11,3 +11,8 @@ export interface ITagCategory {
   updated_at: string | null
   name: string
 }
+
+export interface ISearchRequest {
+  languages: number[]
+  tags: number[]
+}

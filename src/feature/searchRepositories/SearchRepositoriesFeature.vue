@@ -1,10 +1,12 @@
 <script setup lang="ts">
-import { getLanguages, getTagCategories, getTagCategoryChildren } from './api'
+import { getLanguages, getTagCategories, getTagCategoryChildren, searchRepositories } from './api'
 import { useSearchStore } from '@/entities/search/store.ts'
 import type { ITagCategoryMapped } from '@/entities/search/types'
 
 import LanguagesFilter from '@/widgets/languagesFilter/LanguagesFilter.vue'
 import { Button } from '@/shared/ui/button'
+
+import { getLanguagesIds } from './formatFilters'
 
 const searchStore = useSearchStore()
 
@@ -40,7 +42,14 @@ function loadFilters() {
 
 function search() {
   const selectedLanguages = searchStore.getSelectedLanguages()
-  console.log(selectedLanguages)
+  const languageIds = getLanguagesIds(selectedLanguages)
+  const searchReq = {
+    languages: languageIds,
+    tags: [],
+  }
+  searchRepositories(searchReq).then((response) => {
+    console.log(response)
+  })
 }
 
 loadFilters()
