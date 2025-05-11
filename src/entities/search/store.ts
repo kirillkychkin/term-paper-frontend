@@ -6,11 +6,9 @@ export const useSearchStore = defineStore('store', {
   actions: {
     setLanguages(languages: ILanguageMapped[]) {
       this.languages = languages
-      console.log(this.languages)
     },
     setTagCategories(tagCategories: ITagCategoryMapped[]) {
       this.tagCategories = tagCategories
-      console.log(this.tagCategories)
     },
     getSelectedLanguages() {
       return this.languages.filter((language) => language.checked === true)

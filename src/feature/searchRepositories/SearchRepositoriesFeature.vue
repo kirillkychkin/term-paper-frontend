@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { getLanguages, getTagCategories, getTagCategoryChildren } from './api'
 import { useSearchStore } from '@/entities/search/store.ts'
+import type { ITagCategoryMapped } from '@/entities/search/types'
 
 import LanguagesFilter from '@/widgets/languagesFilter/LanguagesFilter.vue'
 import { Button } from '@/shared/ui/button'
@@ -16,14 +17,24 @@ function loadFilters() {
 
   getTagCategories().then((response) => {
     const tagCategs = response.data
-    tagCategs.forEach((tagCategory) => {
-      tagCategory.checked = false
-      getTagCategoryChildren(tagCategory.id).then((response) => {
-        tagCategory.tags = response.data
-      })
+
+    // Map each category to the new format with promises for tags
+    const mappedPromises = tagCategs.map(async (tagCategory) => {
+      const tagsResponse = await getTagCategoryChildren(tagCategory.id)
+
+      // Create a new object that matches ITagCategoryMapped
+      const mappedCategory: ITagCategoryMapped = {
+        ...tagCategory,
+        checked: false,
+        tags: tagsResponse.data,
+      }
+
+      return mappedCategory
     })
 
-    searchStore.setTagCategories(tagCategs)
+    Promise.all(mappedPromises).then((mappedCategories) => {
+      searchStore.setTagCategories(mappedCategories)
+    })
   })
 }
 
