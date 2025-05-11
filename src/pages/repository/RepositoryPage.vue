@@ -6,6 +6,8 @@ import { Button } from '@/shared/ui/button'
 
 import type { IRepositoryOne } from '@/feature/searchRepositories/types'
 
+import { marked } from 'marked'
+
 const router = useRouter()
 const route = useRoute()
 
@@ -28,19 +30,32 @@ watch(
 
 <template>
   <Button class="cursor-pointer mb-8" @click="router.back()">Назад</Button>
-  <h1 class="mb-4"><span class="font-light">Название:</span> {{ repository?.name }}</h1>
+  <h1 class="mb-4 text-3xl"><span class="font-light">Название:</span> {{ repository?.name }}</h1>
   <div v-if="repository?.description != null" class="mb-8">
-    <p class="mb-4">
-      <span class="font-light">Описание:</span> {{ repository.description_russian }}
-    </p>
     <div v-if="repository.description_lang === 'en'">
+      <p class="mb-4">
+        <span class="font-light">Описание:</span> {{ repository.description_russian }}
+      </p>
       <p><span class="font-light">Описание (eng):</span> {{ repository.description }}</p>
     </div>
     <div v-else>
-      <p class="mb-4">
-        <span class="font-light">Описание (eng):</span> {{ repository.translated_description }}
-      </p>
-      <p><span class="font-light">Описание (исходный язык):</span> {{ repository.description }}</p>
+      <div v-if="repository.description_lang === 'ru'">
+        <p class="mb-4"><span class="font-light">Описание:</span> {{ repository.description }}</p>
+        <p>
+          <span class="font-light">Описание (eng):</span> {{ repository.translated_description }}
+        </p>
+      </div>
+      <div v-else>
+        <p class="mb-4">
+          <span class="font-light">Описание:</span> {{ repository.description_russian }}
+        </p>
+        <p class="mb-4">
+          <span class="font-light">Описание (eng):</span> {{ repository.translated_description }}
+        </p>
+        <p>
+          <span class="font-light">Описание (исходный язык):</span> {{ repository.description }}
+        </p>
+      </div>
     </div>
   </div>
   <p>
@@ -62,6 +77,36 @@ watch(
           {{ tag.name }}
         </li>
       </ul>
+    </div>
+  </div>
+  <div v-if="repository?.readme_text != null">
+    <div v-if="repository.readme_lang === 'en'">
+      <h1 class="text-3xl">Readme</h1>
+      <div v-html="marked(repository?.readme_russian as string)" class="prose bg-blue-50"></div>
+      <h1 class="text-3xl">English readme</h1>
+      <div v-html="marked(repository?.readme_text as string)" class="prose bg-blue-50"></div>
+    </div>
+    <div v-else>
+      <div v-if="repository.readme_lang === 'ru'">
+        <h1 class="text-3xl">Readme</h1>
+        <div v-html="marked(repository?.readme_text as string)" class="prose bg-blue-50"></div>
+        <h1 class="text-3xl">English readme (auto translation)</h1>
+        <div
+          v-html="marked(repository?.translated_readme_text as string)"
+          class="prose bg-blue-50"
+        ></div>
+      </div>
+      <div v-else>
+        <h1 class="text-3xl">Readme</h1>
+        <div v-html="marked(repository?.readme_russian as string)" class="prose bg-blue-50"></div>
+        <h1 class="text-3xl">English readme (auto translation)</h1>
+        <div
+          v-html="marked(repository?.translated_readme_text as string)"
+          class="prose bg-blue-50"
+        ></div>
+        <h1 class="text-3xl">Source readme</h1>
+        <div v-html="marked(repository?.readme_text as string)" class="prose bg-blue-50"></div>
+      </div>
     </div>
   </div>
 </template>
