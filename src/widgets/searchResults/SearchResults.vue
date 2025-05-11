@@ -9,12 +9,10 @@ import {
   CardTitle,
 } from '@/shared/ui/card'
 import { Button } from '@/shared/ui/button'
+import { RouterLink } from 'vue-router'
 
 const searchStore = useSearchStore()
 
-function openRepo(repoId: number) {
-  console.log('open repo ' + repoId.toString())
-}
 function getRepositoryWord(count: number): string {
   const lastTwo = count % 100
   const lastOne = count % 10
@@ -59,7 +57,9 @@ function getRepositoryWord(count: number): string {
           {{ repository.description_russian }}
         </CardContent>
         <CardFooter class="flex justify-end px-6">
-          <Button @click="openRepo(repository.id)">Подробнее</Button>
+          <RouterLink :to="'/repository/' + repository.id">
+            <Button class="cursor-pointer">Подробнее</Button></RouterLink
+          >
         </CardFooter>
       </Card>
     </div>

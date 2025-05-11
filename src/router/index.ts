@@ -9,7 +9,7 @@ const router = createRouter({
       component: () => import('@/pages/home/HomePage.vue'),
     },
     {
-      path: '/repositories',
+      path: '/repository/:id',
       name: 'repository',
       component: () => import('@/pages/repository/RepositoryPage.vue'),
     },
