@@ -33,6 +33,15 @@ function getRepositoryWord(count: number): string {
       return 'репозиториев'
   }
 }
+
+function ifTagInFIlter(tagId: number): boolean {
+  const selectedTags = searchStore.getSelectedTags()
+  return selectedTags.some((tag) => tag.id === tagId)
+}
+function ifLanguageInFIlter(languageId: number): boolean {
+  const selectedLanguages = searchStore.getSelectedLanguages()
+  return selectedLanguages.some((language) => language.id === languageId)
+}
 </script>
 
 <template>
@@ -54,7 +63,25 @@ function getRepositoryWord(count: number): string {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          {{ repository.description_russian }}
+          <p>
+            {{ repository.description_russian }}
+          </p>
+          <p class="text-sm">
+            Тэги:
+            <span v-for="(tag, index) in repository.tags" :key="tag.id">
+              <span :class="{ 'bg-teal-200': ifTagInFIlter(tag.id) }">{{ tag.name }}</span
+              ><span v-if="index !== repository.tags.length - 1">, </span>
+            </span>
+          </p>
+          <p class="text-sm">
+            Языки:
+            <span v-for="(language, index) in repository.languages" :key="language.id">
+              <span :class="{ 'bg-teal-200': ifLanguageInFIlter(language.id) }">{{
+                language.name
+              }}</span
+              ><span v-if="index !== repository.languages.length - 1">, </span>
+            </span>
+          </p>
         </CardContent>
         <CardFooter class="flex justify-end px-6">
           <RouterLink :to="'/repository/' + repository.id">
