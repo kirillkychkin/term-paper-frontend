@@ -4,14 +4,14 @@ import { watch, ref } from 'vue'
 import { getRepository } from '@/feature/searchRepositories/api'
 import { Button } from '@/shared/ui/button'
 
-import type { IRepositoryOne } from '@/feature/searchRepositories/types'
+import type { IRepository } from '@/entities/search/types'
 
 import { marked } from 'marked'
 
 const router = useRouter()
 const route = useRoute()
 
-const repository = ref<IRepositoryOne>()
+const repository = ref<IRepository>()
 
 function loadRepository(id: number) {
   getRepository(id).then((response) => {

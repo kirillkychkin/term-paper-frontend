@@ -1,6 +1,6 @@
 import { API_URL, apiInstance } from '@/shared/api/base'
 import type { AxiosPromise } from 'axios'
-import type { ILanguage, ITagCategory, ISearchRequest, IRepositoryOne } from './types'
+import type { ILanguage, ITagCategory, ISearchRequest } from './types'
 import type { ITag, IRepository } from '@/entities/search/types'
 
 export const getLanguages = (): AxiosPromise<ILanguage[]> => {
@@ -19,6 +19,6 @@ export const searchRepositories = (data: ISearchRequest): AxiosPromise<IReposito
   return apiInstance.post(`${API_URL}/repositories/search`, data)
 }
 
-export const getRepository = (repository_id: number): AxiosPromise<IRepositoryOne> => {
+export const getRepository = (repository_id: number): AxiosPromise<IRepository> => {
   return apiInstance.get(`${API_URL}/repositories/${repository_id}`)
 }

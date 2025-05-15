@@ -14,13 +14,16 @@ function selectAll(tagCatIndex: number) {
   <div class="mb-8 px-4">
     <h2 class="mb-4">Раскрой категории тэгов и выбери нужные тэги</h2>
     <div>
-      <Accordion type="single" class="w-full" collapsible>
+      <Accordion type="multiple" class="w-full flex flex-wrap" collapsible>
         <AccordionItem
           v-for="(tagCategory, index) in searchStore.tagCategories"
           :key="tagCategory.id"
           :value="tagCategory.name"
+          class="w-1/3"
         >
-          <AccordionTrigger class="cursor-pointer"> {{ tagCategory.name }}</AccordionTrigger>
+          <AccordionTrigger class="cursor-pointer justify-start">
+            {{ tagCategory.name }}</AccordionTrigger
+          >
           <AccordionContent>
             <div class="items-top flex gap-x-2">
               <Checkbox
